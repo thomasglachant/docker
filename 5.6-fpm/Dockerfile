@@ -35,9 +35,10 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) sockets \
     && docker-php-ext-install -j$(nproc) sockets \
     && pecl install redis-2.2.8 xdebug apcu-4.0.11 \
-    && docker-php-ext-enable -j$(nproc) redis  apcu \
-    && docker-php-ext-enable -j$(nproc) xdebug \
-    && docker-php-ext-enable -j$(nproc) apcu\
+    && docker-php-ext-enable redis \
+    && docker-php-ext-enable apcu \
+    && docker-php-ext-enable xdebug \
+    && docker-php-ext-enable apcu\
     # Install node requirements
     curl -sL https://deb.nodesource.com/setup_6.x | bash - && apt-get install -y nodejs \
     # Clean apt cache
