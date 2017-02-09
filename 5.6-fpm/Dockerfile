@@ -59,3 +59,9 @@ COPY config/php.ini /usr/local/etc/php/
 # Add custom fpm config
 RUN rm -f /usr/local/etc/php-fpm.d/www.conf
 COPY config/www.conf /usr/local/etc/php-fpm.d/www.conf
+
+# Add custom entry point
+COPY entrypoint.sh /bin/entrypoint.sh
+
+# Launch entrypoint
+CMD exec /bin/bash /bin/entrypoint.sh
