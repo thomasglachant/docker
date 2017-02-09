@@ -40,9 +40,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable xdebug \
     && docker-php-ext-enable apcu\
     # Install node requirements
-    curl -sL https://deb.nodesource.com/setup_6.x | bash - && apt-get install -y nodejs \
+    && curl -sL https://deb.nodesource.com/setup_6.x | bash - && apt-get install -y nodejs \
     # Clean apt cache
-    RUN rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 # Set timezone
 RUN rm /etc/localtime ; ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
