@@ -61,7 +61,4 @@ RUN rm -f /usr/local/etc/php-fpm.d/www.conf
 COPY config/www.conf /usr/local/etc/php-fpm.d/www.conf
 
 # Add custom entry point
-COPY entrypoint.sh /bin/entrypoint.sh
-
-# Launch entrypoint
-CMD exec /bin/bash /bin/entrypoint.sh
+COPY docker-php-entrypoint /usr/local/bin/

@@ -63,7 +63,7 @@ WORKDIR /var/www/symfony
 COPY config/php.ini /usr/local/etc/php/
 
 # Add custom entry point
-COPY entrypoint.sh /bin/entrypoint.sh
+COPY docker-php-entrypoint /usr/local/bin/
 
 # Launch entrypoint
-CMD exec /bin/bash /bin/entrypoint.sh
+CMD exec docker-php-entrypoint
