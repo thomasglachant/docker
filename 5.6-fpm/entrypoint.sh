@@ -11,4 +11,4 @@ echo 'xdebug.remote_autostart = '"$PHP_XDEBUG_ENABLED"'' >> /usr/local/etc/php/c
 echo 'xdebug.max_nesting_level = '"$PHP_XDEBUG_MAX_NESTING_LEVEL"'' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 echo 'xdebug.idekey = '"$PHP_XDEBUG_IDEKEY"'' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
-exec "docker-php-entrypoint $@"
+exec "/usr/local/bin/docker-php-entrypoint $@"
