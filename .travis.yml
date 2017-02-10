@@ -24,10 +24,9 @@ script:
 after_script:
   - docker images
 
-notifications:
-  after_success:
-    - >
-      [ "$TRAVIS_BRANCH" == "master" ]
-      && curl -X POST -H "Content-Type: application/json"
-      --data '{"build": true}'
-      https://registry.hub.docker.com/u/thomasglachant/docker-php/trigger/${DOCKERHUB_TOKEN}/
+after_success:
+  - >
+    [ "$TRAVIS_BRANCH" == "master" ]
+    && curl -X POST -H "Content-Type: application/json"
+    --data '{"build": true}'
+    https://registry.hub.docker.com/u/thomasglachant/docker-php/trigger/${DOCKERHUB_TOKEN}/
