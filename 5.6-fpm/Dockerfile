@@ -8,50 +8,61 @@ ENV PHP_XDEBUG_HOST=0.0.0.0
 ENV PHP_XDEBUG_IDEKEY=PHPSTORM
 ENV PHP_XDEBUG_PORT=9000
 ENV PHP_XDEBUG_MAX_NESTING_LEVEL=1024
+# PHP IDE CONFIG
+ENV PHP_IDE_CONFIG="serverName=docker"
 
 # Instal php requirements
-RUN apt-get update && apt-get install -y \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        # GD requirements
+        libjpeg62-turbo-dev libpng12-dev libfreetype6-dev \
+        # iconv requirements
         libmcrypt-dev \
-        libpng12-dev \
-        curl libcurl3 libcurl3-dev php5-curl php5-mcrypt \
+        # curl requirements
+        libcurl3-dev \
+        # intl requirements
         libicu-dev \
+        # dom requirements
         libxml2-dev \
-        libbz2-dev re2c libpng++-dev \
-        libpng3 libjpeg-dev libvpx-dev zlib1g-dev libgd-dev libssl-dev \
-        libtidy-dev libxslt1-dev libmagic-dev libexif-dev file libssh2-1-dev git wget \
-        libpcre3-dev \
-    && docker-php-ext-install -j$(nproc) iconv mcrypt \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-install -j$(nproc) curl \
-    && docker-php-ext-install -j$(nproc) pdo pdo_mysql fileinfo iconv intl json mbstring \
-    && docker-php-ext-install -j$(nproc) dom bz2 mysqli pcntl phar posix \
-    && docker-php-ext-install -j$(nproc) simplexml soap tidy tokenizer xml xmlreader xmlrpc \
-    && docker-php-ext-install -j$(nproc) xmlwriter xsl zip bcmath calendar ctype \
-    && docker-php-ext-install -j$(nproc) exif \
-    && docker-php-ext-install -j$(nproc) fileinfo \
-    && docker-php-ext-install -j$(nproc) sockets \
-    && docker-php-ext-install -j$(nproc) sockets \
-    && pecl install redis-2.2.8 xdebug apcu-4.0.11 \
-    && docker-php-ext-enable redis \
-    && docker-php-ext-enable apcu \
-    && docker-php-ext-enable xdebug \
-    && docker-php-ext-enable apcu\
-    # Install node requirements
-    && curl -sL https://deb.nodesource.com/setup_6.x | bash - && apt-get install -y nodejs \
+        # bz2 requirements
+        libbz2-dev \
+        # phar requirements
+        libssl-dev \
+        # tidy requirements
+        libtidy-dev \
+        # xsl requirements
+        libxslt1-dev \
+        # zip requirements
+        zlib1g-dev \
+
+    && docker-php-ext-configure \
+        gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+
+    && docker-php-ext-install -j$(nproc) \
+        iconv mcrypt gd curl pdo pdo_mysql fileinfo intl json mbstring \
+        dom bz2 mysqli pcntl phar posix soap tidy tokenizer xsl zip bcmath \
+        ctype exif sockets opcache simplexml xml \
+
+    && pecl install \
+        redis-2.2.8 xdebug apcu-4.0.11 \
+
+    && docker-php-ext-enable \
+        redis apcu xdebug \
+    
     # Clean apt cache
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get purge -y --auto-remove
 
-# Set timezone
-RUN rm /etc/localtime ; ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
-
-# Set user for permissions
-RUN usermod -u 1000 www-data
+# Install node
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - && apt-get install -y nodejs \
+    # Clean apt cache
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get purge -y --auto-remove
 
 # Set workdir as project root
 WORKDIR /var/www/symfony
+
+# Set user for permissions
+RUN usermod -u 1000 www-data
 
 # Add php custom config
 COPY config/php.ini /usr/local/etc/php/

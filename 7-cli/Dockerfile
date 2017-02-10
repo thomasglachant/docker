@@ -1,4 +1,4 @@
-FROM php:5.6-cli
+FROM php:7-cli
 
 MAINTAINER Thomas Glachant <thomas@glachant.fr>
 
@@ -45,7 +45,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         ctype exif sockets opcache simplexml xml \
 
     && pecl install \
-        redis-2.2.8 xdebug apcu-4.0.11 \
+        redis xdebug apcu \
 
     && docker-php-ext-enable \
         redis apcu xdebug \
@@ -80,4 +80,3 @@ COPY config/php.ini /usr/local/etc/php/
 COPY docker-php-entrypoint /usr/local/bin/
 # Launch entrypoint
 CMD exec docker-php-entrypoint
-
