@@ -22,3 +22,7 @@ script:
 
 after_script:
   - docker images
+
+notifications:
+  webhooks:
+    - https://registry.hub.docker.com/u/thomasglachant/docker-php/trigger/${DOCKERHUB_TOKEN}/
