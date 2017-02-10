@@ -4,17 +4,17 @@ services:
   - docker
 
 env:
-  - VERSION=5.6 VARIANT=cli
-  - VERSION=5.6 VARIANT=fpm
-  - VERSION=7.0 VARIANT=cli
-  - VERSION=7.0 VARIANT=fpm
-  - VERSION=7.1 VARIANT=cli
-  - VERSION=7.1 VARIANT=fpm
+  - PHP_VERSION=5.6 VARIANT=cli
+  - PHP_VERSION=5.6 VARIANT=fpm
+  - PHP_VERSION=7.0 VARIANT=cli
+  - PHP_VERSION=7.0 VARIANT=fpm
+  - PHP_VERSION=7.1 VARIANT=cli
+  - PHP_VERSION=7.1 VARIANT=fpm
 
 before_script:
   - env | sort
-  - cd "$VERSION"
-  - image="thomasglachant/docker-php:${VERSION}${VARIANT:+-$VARIANT}"
+  - cd "$PHP_VERSION"
+  - image="thomasglachant/docker-php:${PHP_VERSION}${VARIANT:+-$VARIANT}"
   - image="${image//'/'/-}"
 
 script:
