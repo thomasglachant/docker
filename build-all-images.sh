@@ -24,7 +24,7 @@ for VERSION in `ls ${basedir}`; do
 		printf "============================\n==> Start build \"$VERSION-${VARIANT}\" <==\n============================\n";
 
 		# Build image
-		docker build -t thomasglachant/docker-php:php${VERSION}-${VARIANT} ${VARIANT_DIR}
+		docker build -t thomasglachant/docker-php:${VERSION}-${VARIANT} ${VARIANT_DIR}
 
 		# get build return code 
 		BUILD_SUCCESS=$?
