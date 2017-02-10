@@ -18,8 +18,7 @@ before_script:
   - image="${image//'/'/-}"
 
 script:
-  - echo "OK"
-  #- docker build -t ${image} "${VARIANT:-.}"
+  - docker build -t ${image} "${VARIANT:-.}"
 
 after_script:
   - docker images
