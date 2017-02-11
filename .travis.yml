@@ -27,6 +27,6 @@ after_script:
 after_success:
   - >
     [ "$TRAVIS_BRANCH" == "master" ]
-    && curl -X POST -H "Content-Type: application/json"
-    --data '{"build": true}'
-    https://registry.hub.docker.com/u/thomasglachant/docker-php/trigger/${DOCKERHUB_TOKEN}/
+    && [ "$DOCKER_USER" != "" ]
+    && docker login --username=$DOCKER_USER --password=$DOCKER_PASS 
+    && docker push ${IMAGE}
