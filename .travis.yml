@@ -20,12 +20,10 @@ before_script:
 
 script:
   - docker build -t ${IMAGE} "${DOCKERFILE}"
-
-after_script:
-  - docker images
-
-after_success:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+  - if [ "$TRAVIS_BRANCH" == "master" ] && [ `docker images -q ${IMAGE} | wc -l` -eq 1 ]; then
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
       docker push "${IMAGE}";
     fi
+
+after_script:
+  - docker images
