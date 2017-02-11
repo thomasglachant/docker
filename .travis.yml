@@ -14,12 +14,12 @@ env:
 
 before_script:
   - env | sort
-  - DOCKERFILE={APP}{APP_VERSION:+/$APP_VERSION}{APP_VARIANT:+/$APP_VARIANT}
+  - DOCKERFILE=${APP}${APP_VERSION:+/$APP_VERSION}${APP_VARIANT:+/$APP_VARIANT}
   - IMAGE="thomasglachant/docker:${APP}${APP_VERSION:+$APP_VERSION}${APP_VARIANT:+-$APP_VARIANT}"
   - IMAGE="${IMAGE//'/'/-}"
 
 script:
-  - docker build -t ${IMAGE} "$DOCKERFILE"
+  - docker build -t ${IMAGE} "${DOCKERFILE}"
 
 after_script:
   - docker images
