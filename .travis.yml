@@ -16,12 +16,12 @@ before_script:
   - env | sort
   - DOCKERFILE=${APP}${APP_VERSION:+/$APP_VERSION}${APP_VARIANT:+/$APP_VARIANT}
   - IMAGE="thomasglachant/docker:${APP}${APP_VERSION:+$APP_VERSION}${APP_VARIANT:+-$APP_VARIANT}"
-  - IMAGE="${IMAGE//'/'/-}"
 
 script:
   - docker build -t ${IMAGE} "${DOCKERFILE}"
   - if [ "$TRAVIS_BRANCH" == "master" ] && [ `docker images -q ${IMAGE} | wc -l` -eq 1 ]; then
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+      echo "Push to ${IMAGE}"; 
       docker push "${IMAGE}";
     fi
 

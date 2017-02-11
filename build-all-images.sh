@@ -18,7 +18,6 @@ for DOCKERFILE in `find $SCRIPTPATH -type f -name "Dockerfile"`; do
 	APP_VARIANT=`echo $DOCKERFILE_PATH | cut -d"/" -f3`
 
 	IMAGE="thomasglachant/docker:${APP}${APP_VERSION:+$APP_VERSION}${APP_VARIANT:+-$APP_VARIANT}"
-	IMAGE="${IMAGE//'/'/-}"
 
 	printf "\n============================\n${IMAGE}\n============================\n";
 
