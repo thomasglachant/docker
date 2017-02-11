@@ -26,6 +26,7 @@ after_script:
 
 after_success:
   - >
-    [ "$TRAVIS_BRANCH" == "master" ]
-    && docker login --username=${DOCKER_USER} --password=${DOCKER_PASS}
-    && docker push ${IMAGE}
+    if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+      docker login --username=${DOCKER_USER} --password=${DOCKER_PASS};
+      docker push ${IMAGE};
+    fi
