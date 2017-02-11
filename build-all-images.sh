@@ -2,39 +2,46 @@
 
 SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# For all versions : launch build
-for VERSION in `ls ${basedir}`; do
-	# Version directory
-	VERSION_DIR=${SCRIPTPATH}/${VERSION}
+ERRORED=0
+SUMMARY=""
 
-	# Explore only directories so exit if not directory
-	if [[ ! -d $VERSION_DIR ]]; then
-		break;
+GLOBAL_START=$(date +'%s')
+
+for DOCKERFILE in `find $SCRIPTPATH -type f -name "Dockerfile"`; do
+	DOCKERFILE_START=$(date +'%s')
+
+	# Get relative path for the dockerfile's folder
+	DOCKERFILE_PATH=${DOCKERFILE:`echo $SCRIPTPATH|wc -c`:$((`echo $DOCKERFILE|wc -c`-`echo $SCRIPTPATH|wc -c`-`echo /Dockerfile|wc -c`))}
+	
+	APP=`echo $DOCKERFILE_PATH | cut -d"/" -f1`
+	APP_VERSION=`echo $DOCKERFILE_PATH | cut -d"/" -f2`
+	APP_VARIANT=`echo $DOCKERFILE_PATH | cut -d"/" -f3`
+
+	IMAGE="thomasglachant/docker:${APP}${APP_VERSION:+$APP_VERSION}${APP_VARIANT:+-$APP_VARIANT}"
+	IMAGE="${IMAGE//'/'/-}"
+
+	printf "\n============================\n${IMAGE}\n============================\n";
+
+	# Build image
+	docker build -t ${IMAGE} ${DOCKERFILE_PATH}
+
+	# test build return code to check if build failed
+	if [[ $? -eq 0 ]] ; then
+		SUMMARY="${SUMMARY}${IMAGE} : OK ($(($(date +'%s') - $DOCKERFILE_START)) seconds)\n";
+	# if build failed
+	else
+		ERRORED=1
+		SUMMARY="${SUMMARY}${IMAGE} : Error !\n";
 	fi
-
-	for VARIANT in `ls ${VERSION_DIR}`; do
-		# Variant directory
-		VARIANT_DIR=${VERSION_DIR}/${VARIANT}
-		
-		# If the directory does not contain a docker file : exit
-		if [[ ! -d ${VARIANT_DIR} ]] || [[ ! -f ${VARIANT_DIR}/Dockerfile ]]; then
-			break
-		fi
-
-		printf "============================\n==> Start build \"$VERSION-${VARIANT}\" <==\n============================\n";
-
-		# Build image
-		docker build -t thomasglachant/docker-php:${VERSION}-${VARIANT} ${VARIANT_DIR}
-
-		# get build return code 
-		BUILD_SUCCESS=$?
-
-		printf "============================\n==> End build \"$VERSION-${VARIANT}\" <==\n============================\n\n";
-
-		# if build fail : exit
-		if [[ ${BUILD_SUCCESS} -ne 0 ]] ; then
-			printf "Error : Unable to build version \"${VERSION}-${VARIANT}\"\n";
-			exit -1;
-		fi
-	done
 done
+
+# Display summary
+printf "\n\nSUMMARY\n=======\n$SUMMARY\nTotal : $(($(date +'%s') - $GLOBAL_START)) seconds\n"
+
+# An error as occured : return error code
+if [[ ${ERRORED} -eq 1 ]]; then
+	exit 1
+fi
+
+# No error 
+exit 0
