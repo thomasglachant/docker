@@ -4,12 +4,12 @@ set -xe
 # Blackfire
 if [ ${PHP_BLACKFIRE_ENABLED} -eq 1 ] ; then
 printf "
-extension=xdebug.so
+extension=blackfire.so
+blackfire.agent_socket = tcp://$PHP_BLACKFIRE_HOST:$PHP_BLACKFIRE_PORT
 " > /usr/local/etc/php/conf.d/docker-php-ext-blackfire.ini
 else
 printf "
-extension=xdebug.so
-blackfire.agent_socket = tcp://$PHP_BLACKFIRE_HOST:$PHP_BLACKFIRE_PORT
+;extension=blackfire.so
 " > /usr/local/etc/php/conf.d/docker-php-ext-blackfire.ini
 fi
 
@@ -28,6 +28,6 @@ xdebug.idekey = $PHP_XDEBUG_IDEKEY
 " > /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 else
 printf "
-zend_extension=xdebug.so
+;zend_extension=xdebug.so
 " > /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 fi
