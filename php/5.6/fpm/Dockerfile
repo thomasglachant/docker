@@ -10,6 +10,10 @@ ENV PHP_XDEBUG_PORT=9000
 ENV PHP_XDEBUG_MAX_NESTING_LEVEL=1024
 # PHP IDE CONFIG
 ENV PHP_IDE_CONFIG="serverName=docker"
+# Blackfire default config
+ENV PHP_BLACKFIRE_ENABLED=0
+ENV PHP_BLACKFIRE_HOST=blackfire
+ENV PHP_BLACKFIRE_PORT=8707
 
 # Instal php requirements
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -59,9 +63,6 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - && apt-get install -y
     && apt-get purge -y --auto-remove
 
 # Blackfire
-ENV PHP_BLACKFIRE_ENABLED=0
-ENV PHP_BLACKFIRE_HOST=blackfire
-ENV PHP_BLACKFIRE_PORT=8707
 RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
     && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/linux/amd64/$version \
     && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp \

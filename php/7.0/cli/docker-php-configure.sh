@@ -1,18 +1,6 @@
 #!/bin/sh
 set -xe
 
-# Blackfire
-if [ ${PHP_BLACKFIRE_ENABLED} -eq 1 ] ; then
-printf "
-extension=blackfire.so
-blackfire.agent_socket = tcp://$PHP_BLACKFIRE_HOST:$PHP_BLACKFIRE_PORT
-" > /usr/local/etc/php/conf.d/docker-php-ext-blackfire.ini
-else
-printf "
-;extension=blackfire.so
-" > /usr/local/etc/php/conf.d/docker-php-ext-blackfire.ini
-fi
-
 # Xdebug
 if [ ${PHP_XDEBUG_ENABLED} -eq 1 ] ; then
 printf "
