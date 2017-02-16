@@ -65,11 +65,12 @@ WORKDIR /var/www/symfony
 RUN usermod -u 1000 www-data
 
 # Add php custom config
-COPY config/php.ini /usr/local/etc/php/
+COPY php.ini /usr/local/etc/php/
 
 # Add custom fpm config
 RUN rm -f /usr/local/etc/php-fpm.d/www.conf
-COPY config/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 
-# Add custom entry point
-COPY docker-php-entrypoint /usr/local/bin/
+# Add custom entry point & configure script
+COPY docker-php-entrypoint.sh /usr/local/bin/docker-php-entrypoint
+COPY docker-php-configure.sh /usr/local/bin/docker-php-configure

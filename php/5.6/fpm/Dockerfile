@@ -58,6 +58,15 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - && apt-get install -y
     && rm -rf /var/lib/apt/lists/* \
     && apt-get purge -y --auto-remove
 
+# Blackfire
+ENV PHP_BLACKFIRE_ENABLED=0
+ENV PHP_BLACKFIRE_HOST=blackfire
+ENV PHP_BLACKFIRE_PORT=8707
+RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
+    && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/linux/amd64/$version \
+    && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp \
+    && mv /tmp/blackfire-*.so $(php -r "echo ini_get('extension_dir');")/blackfire.so;
+
 # Set workdir as project root
 WORKDIR /var/www/symfony
 
@@ -65,11 +74,12 @@ WORKDIR /var/www/symfony
 RUN usermod -u 1000 www-data
 
 # Add php custom config
-COPY config/php.ini /usr/local/etc/php/
+COPY php.ini /usr/local/etc/php/
 
 # Add custom fpm config
 RUN rm -f /usr/local/etc/php-fpm.d/www.conf
-COPY config/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 
-# Add custom entry point
-COPY docker-php-entrypoint /usr/local/bin/
+# Add custom entry point & configure script
+COPY docker-php-entrypoint.sh /usr/local/bin/docker-php-entrypoint
+COPY docker-php-configure.sh /usr/local/bin/docker-php-configure
