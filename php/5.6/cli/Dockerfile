@@ -81,4 +81,4 @@ COPY docker-php-entrypoint.sh /usr/local/bin/docker-php-entrypoint
 COPY docker-php-configure.sh /usr/local/bin/docker-php-configure
 # Launch entrypoint
 ENTRYPOINT ["docker-php-entrypoint"]
-
+CMD ["php"]
