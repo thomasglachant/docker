@@ -12,9 +12,7 @@ if [ -d log ]; then chmod -R 777 log; fi
 if [ -d app/logs ]; then chmod -R 777 app/logs; fi
 if [ -d var/logs ]; then chmod -R 777 var/logs; fi
 # Launch
-# first arg is `-f` or `--some-option`
-if [ "${1#-}" != "$1" ]; then
-	set -- php "$@"
+if [ "$#" -ge 1 ]; then
     exec "$@"
 else
     # Infinite loop
