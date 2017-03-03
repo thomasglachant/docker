@@ -82,5 +82,4 @@ COPY docker-php-configure.sh /usr/local/bin/docker-php-configure
 # Launch entrypoint
 # Launch entrypoint
 ENTRYPOINT ["docker-php-entrypoint"]
-CMD ["php"]
 
