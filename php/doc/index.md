@@ -85,3 +85,26 @@ Puis modifier la config :
 PHP_XDEBUG_HOST=10.254.254.254
 ```
 
+### Symfony
+
+Pour injecter automatiquement les variables d'environement dans les parameters, il faut modifier
+le composer.json pour qu'il contienne : 
+```
+"require": {
+    "incenteev/composer-parameter-handler": "~2.0",
+},
+"post-install-cmd": [
+    "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
+],
+"post-update-cmd": [
+    "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
+],
+"extra": {
+    "incenteev-parameters": {
+        "file": "app/config/parameters.yml",
+        "env-map": {
+            /******* VARIABLES D'ENVIRONNEMENT ********/
+        }
+    },
+}
+```
