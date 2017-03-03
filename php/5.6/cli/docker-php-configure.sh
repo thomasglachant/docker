@@ -1,8 +1,13 @@
 #!/bin/sh
 set -xe
 
+export DOCKER_BRIDGE_IP=$(ip ro | grep default | cut -d' ' -f 3)
+
 # Xdebug
 if [ ${PHP_XDEBUG_ENABLED} -eq 1 ] ; then
+if [ ! ${PHP_XDEBUG_HOST} ]; then
+    PHP_XDEBUG_HOST=${DOCKER_BRIDGE_IP}
+fi
 printf "
 zend_extension=xdebug.so
 xdebug.default_enable = $PHP_XDEBUG_ENABLED\n

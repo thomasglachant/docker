@@ -9,7 +9,7 @@ ENV PHP_XDEBUG_IDEKEY=PHPSTORM
 ENV PHP_XDEBUG_PORT=9000
 ENV PHP_XDEBUG_MAX_NESTING_LEVEL=1024
 
-# PHP IDE CONFIG
+# PHP IDE CONFIG (for xdebug : do not edit)
 ENV PHP_IDE_CONFIG="serverName=docker"
 
 # Blackfire default config

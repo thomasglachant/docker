@@ -4,12 +4,14 @@ MAINTAINER Thomas Glachant <thomas@glachant.fr>
 
 # Xdebug default config
 ENV PHP_XDEBUG_ENABLED=0
-ENV PHP_XDEBUG_HOST=0.0.0.0
+ENV PHP_XDEBUG_HOST=
 ENV PHP_XDEBUG_IDEKEY=PHPSTORM
 ENV PHP_XDEBUG_PORT=9000
 ENV PHP_XDEBUG_MAX_NESTING_LEVEL=1024
-# PHP IDE CONFIG
+
+# PHP IDE CONFIG (for xdebug : do not edit)
 ENV PHP_IDE_CONFIG="serverName=docker"
+
 
 # Instal php requirements
 RUN apt-get update && apt-get install -y --no-install-recommends \
