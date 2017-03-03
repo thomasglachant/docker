@@ -62,6 +62,13 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - && apt-get install -y
     && rm -rf /var/lib/apt/lists/* \
     && apt-get purge -y --auto-remove
 
+# Install composer
+ADD composer.sh /tmp/
+RUN /tmp/composer.sh \
+    && mv composer.phar /usr/bin/composer \
+    && composer global require "hirak/prestissimo:^0.3" \
+    && rm /tmp/composer.sh
+
 # Blackfire
 RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
     && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/linux/amd64/$version \
