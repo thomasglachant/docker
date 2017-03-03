@@ -12,6 +12,8 @@ ENV PHP_XDEBUG_MAX_NESTING_LEVEL=1024
 # PHP IDE CONFIG (for xdebug : do not edit)
 ENV PHP_IDE_CONFIG="serverName=docker"
 
+# https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
+ENV COMPOSER_ALLOW_SUPERUSER 1
 
 # Instal php requirements
 RUN apt-get update && apt-get install -y --no-install-recommends \

@@ -17,6 +17,8 @@ ENV PHP_BLACKFIRE_ENABLED=0
 ENV PHP_BLACKFIRE_HOST=blackfire
 ENV PHP_BLACKFIRE_PORT=8707
 
+# https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
+ENV COMPOSER_ALLOW_SUPERUSER 1
 
 # Instal php requirements
 RUN apt-get update && apt-get install -y --no-install-recommends \
