@@ -17,6 +17,8 @@ ENV PHP_BLACKFIRE_PORT=8707
 
 # Instal php requirements
 RUN apt-get update && apt-get install -y --no-install-recommends \
+        # Common
+        git curl \
         # GD requirements
         libjpeg62-turbo-dev libpng12-dev libfreetype6-dev \
         # iconv requirements
