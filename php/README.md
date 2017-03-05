@@ -63,11 +63,11 @@ Si PHP_XDEBUG_HOST est null alors le script détectera automatiquement le host d
 
 Configurer le proxy DBGp : 
 
-![Xdebug phpstorm](./img/xdebug-phpstorm.png)
+![Xdebug phpstorm](./xdebug-phpstorm.png)
 
 Puis ajouter un mapping : 
 
-![Xdebug phpstorm](./img/xdebug-phpstorm-1.png)
+![Xdebug phpstorm](./xdebug-phpstorm-1.png)
 
 
 ### Mac

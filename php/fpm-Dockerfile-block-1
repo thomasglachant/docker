@@ -1,0 +1,9 @@
+## FPM config ##
+# Add custom fpm config
+RUN rm -f /usr/local/etc/php-fpm.d/www.conf
+COPY www.conf /usr/local/etc/php-fpm.d/www.conf
+
+# Blackfire default config
+ENV PHP_BLACKFIRE_ENABLED=0
+ENV PHP_BLACKFIRE_HOST=blackfire
+ENV PHP_BLACKFIRE_PORT=8707

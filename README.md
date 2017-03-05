@@ -3,5 +3,5 @@
 Check it on DockerHub : https://hub.docker.com/r/thomasglachant/docker/
 
 # Images Documentaion 
-* [Images PHP](php/doc/index.md)
-* [Images Nginx](nginx/doc/index.md)
+* [Images PHP](php/README.md)
+* [Images Nginx](nginx/README.md)
