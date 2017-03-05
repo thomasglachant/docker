@@ -3,7 +3,7 @@ FROM php:7.1-fpm
 MAINTAINER Thomas Glachant <thomas@glachant.fr>
 
 ## Vars
-ENV REDIS_VERSION=3.3.1
+ENV REDIS_VERSION=3.1.1
 ENV APCU_VERSION=5.1.8
 
 # Xdebug default config

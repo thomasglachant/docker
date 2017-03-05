@@ -27,7 +27,7 @@ for version in "${versions[@]}"; do
         REDIS_VERSION="2.2.8"
     else
         APCU_VERSION="5.1.8"
-        REDIS_VERSION="3.3.1"
+        REDIS_VERSION="3.1.1"
     fi
 
     for target in \
