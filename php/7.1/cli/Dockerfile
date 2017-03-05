@@ -53,10 +53,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         ctype exif sockets opcache simplexml xml \
 
     && pecl install \
-        redis xdebug- apcu \
+        redis-${REDIS_VERSION} xdebug apcu-${APCU_VERSION} \
 
     && docker-php-ext-enable \
-        redis-${REDIS_VERSION} apcu-${APCU_VERSION} xdebug \
+        redis apcu xdebug \
 
     # Clean apt cache
     && rm -rf /var/lib/apt/lists/* \
