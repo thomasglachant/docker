@@ -95,6 +95,8 @@ COPY php.ini /usr/local/etc/php/
 RUN rm -f /usr/local/etc/php-fpm.d/www.conf
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 
-# Add custom entry point & configure script
-COPY docker-php-entrypoint.sh /usr/local/bin/docker-php-entrypoint
-COPY docker-php-configure.sh /usr/local/bin/docker-php-configure
+# Add custom start script & configure script
+COPY docker-app-start.sh /usr/local/bin/docker-app-start
+COPY docker-app-configure.sh /usr/local/bin/docker-app-configure
+
+CMD ["docker-app-start"]
