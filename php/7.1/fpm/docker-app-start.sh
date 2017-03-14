@@ -23,7 +23,7 @@ fi
 printf "
 zend_extension=xdebug.so
 xdebug.default_enable = ${PHP_XDEBUG_ENABLED}\n
-xdebug.remote_enable = e${PHP_XDEBUG_ENABLED}\n
+xdebug.remote_enable = ${PHP_XDEBUG_ENABLED}\n
 xdebug.remote_host = ${PHP_XDEBUG_HOST}\n
 xdebug.remote_port = ${PHP_XDEBUG_PORT}\n
 xdebug.remote_handler = dbgp\n
