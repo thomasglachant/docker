@@ -23,6 +23,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN apt-get update && apt-get install -y --no-install-recommends \
         # Common
         git curl \
+		libpcre3-dev \
         # GD requirements
         libjpeg62-turbo-dev libpng12-dev libfreetype6-dev \
         # iconv requirements
