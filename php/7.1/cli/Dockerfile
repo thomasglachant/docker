@@ -79,6 +79,7 @@ RUN /tmp/composer.sh \
 
 # Install php-cs-fixer
 RUN curl -O https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v${CSFIXER_VERSION}/php-cs-fixer.phar \
+    && chmod +x php-cs-fixer.phar \
     && mv php-cs-fixer.phar /usr/bin/php-cs-fixer
 
 # Blackfire
