@@ -76,6 +76,12 @@ RUN /tmp/composer.sh \
     && composer global require "hirak/prestissimo:^0.3" \
     && rm /tmp/composer.sh
 
+# Install php-cs-fixer
+ADD php-cs-fixer.sh /tmp/
+RUN /tmp/php-cs-fixer.sh \
+    && mv php-cs-fixer.phar /usr/bin/php-cs-fixer \
+    && rm /tmp/php-cs-fixer.sh
+
 # Blackfire
 RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
     && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/linux/amd64/$version \
