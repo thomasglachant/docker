@@ -44,6 +44,7 @@ for version in "${versions[@]}"; do
             ia && ac == 1 { system("cat '${target}'-Dockerfile-block-" ab) }
         ' "${base}" > "${version}/${target}/Dockerfile"
         cp -v composer.sh "${version}/${target}/"
+        cp -v php-cs-fixer.sh "${version}/${target}/"
         cp -v "${target}-docker-app-start.sh" "${version}/${target}/docker-app-start.sh"
         cp -v "${target}-php.ini" "${version}/${target}/php.ini"
         if [ ${target} == 'fpm' ]; then
