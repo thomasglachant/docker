@@ -22,6 +22,7 @@ travisEnv=
 for version in "${versions[@]}"; do
     dockerfiles=()
 
+    CSFIXER_VERSION="2.3.1"
     if [ "${version}" == "5.6" ]; then
         APCU_VERSION="4.0.11"
         REDIS_VERSION="2.2.8"
@@ -44,7 +45,6 @@ for version in "${versions[@]}"; do
             ia && ac == 1 { system("cat '${target}'-Dockerfile-block-" ab) }
         ' "${base}" > "${version}/${target}/Dockerfile"
         cp -v composer.sh "${version}/${target}/"
-        cp -v php-cs-fixer.sh "${version}/${target}/"
         cp -v "${target}-docker-app-start.sh" "${version}/${target}/docker-app-start.sh"
         cp -v "${target}-php.ini" "${version}/${target}/php.ini"
         if [ ${target} == 'fpm' ]; then
@@ -55,6 +55,7 @@ for version in "${versions[@]}"; do
             sed -ri \
                 -e 's!%%REDIS_VERSION%%!'"${REDIS_VERSION}"'!' \
                 -e 's!%%APCU_VERSION%%!'"${APCU_VERSION}"'!' \
+                -e 's!%%CSFIXER_VERSION%%!'"${CSFIXER_VERSION}"'!' \
                 -e 's!%%INHERIT_VERSION%%!'"${INHERIT_VERSION}"'!' \
                 "${version}/${target}/Dockerfile"
         )

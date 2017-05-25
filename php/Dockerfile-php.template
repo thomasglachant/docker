@@ -5,10 +5,11 @@ MAINTAINER Thomas Glachant <thomas@glachant.fr>
 ## Vars
 ENV REDIS_VERSION=%%REDIS_VERSION%%
 ENV APCU_VERSION=%%APCU_VERSION%%
+ENV CSFIXER_VERSION=%%CSFIXER_VERSION%%
 
 # Xdebug default config
 ENV PHP_XDEBUG_ENABLED=0
-ENV PHP_XDEBUG_HOST=
+ENV PHP_XDEBUG_HOST=0
 ENV PHP_XDEBUG_IDEKEY=PHPSTORM
 ENV PHP_XDEBUG_PORT=9000
 ENV PHP_XDEBUG_MAX_NESTING_LEVEL=1024
@@ -23,7 +24,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN apt-get update && apt-get install -y --no-install-recommends \
         # Common
         git curl \
-		libpcre3-dev \
+        libpcre3-dev \
         # GD requirements
         libjpeg62-turbo-dev libpng12-dev libfreetype6-dev \
         # iconv requirements
@@ -77,10 +78,8 @@ RUN /tmp/composer.sh \
     && rm /tmp/composer.sh
 
 # Install php-cs-fixer
-ADD php-cs-fixer.sh /tmp/
-RUN /tmp/php-cs-fixer.sh \
-    && mv php-cs-fixer.phar /usr/bin/php-cs-fixer \
-    && rm /tmp/php-cs-fixer.sh
+RUN curl -O https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v${CSFIXER_VERSION}/php-cs-fixer.phar \
+    && mv php-cs-fixer.phar /usr/bin/php-cs-fixer
 
 # Blackfire
 RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
