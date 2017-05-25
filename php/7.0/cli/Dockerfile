@@ -78,9 +78,9 @@ RUN /tmp/composer.sh \
     && rm /tmp/composer.sh
 
 # Install php-cs-fixer
-RUN curl -O https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v${CSFIXER_VERSION}/php-cs-fixer.phar \
-    && chmod +x php-cs-fixer.phar \
-    && mv php-cs-fixer.phar /usr/bin/php-cs-fixer
+RUN curl -L http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar -o php-cs-fixer \
+    && chmod a+x php-cs-fixer \
+    && mv php-cs-fixer /usr/local/bin/php-cs-fixer
 
 # Blackfire
 RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
