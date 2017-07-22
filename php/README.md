@@ -4,7 +4,7 @@
 
 Exemple de configuration docker-compose :
 ```
-web:
+app:
     image: "thomasglachant/docker:php7.1-fpm"
     depends_on:
        - db
