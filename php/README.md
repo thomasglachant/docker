@@ -8,14 +8,8 @@ web:
     image: "thomasglachant/docker:php7.1-fpm"
     depends_on:
        - db
-       - blackfire
     volumes:
         - "./:/var/www/symfony"
-        - "/var/www/symfony/app/cache"
-        - "/var/www/symfony/app/logs"
-    links:
-        - "db:db"
-        - "blackfire:blackfire"
     environment:
         - PHP_BLACKFIRE_ENABLED=0
         - PHP_XDEBUG_ENABLED=0
