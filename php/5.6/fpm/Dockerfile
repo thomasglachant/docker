@@ -1,11 +1,11 @@
-FROM php:5.6-fpm
+FROM php:%%INHERIT_VERSION%%
 
 MAINTAINER Thomas Glachant <thomas@glachant.fr>
 
 ## Vars
-ENV REDIS_VERSION=2.2.8
-ENV APCU_VERSION=4.0.11
-ENV CSFIXER_VERSION=2.3.1
+ENV REDIS_VERSION=%%REDIS_VERSION%%
+ENV APCU_VERSION=%%APCU_VERSION%%
+ENV CSFIXER_VERSION=%%CSFIXER_VERSION%%
 
 # Xdebug default config
 ENV PHP_XDEBUG_ENABLED=0
@@ -45,6 +45,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libxslt1-dev \
         # zip requirements
         zlib1g-dev \
+        # yaml requirements
+        libyaml-dev \
 
     && docker-php-ext-configure \
         gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
@@ -55,10 +57,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         ctype exif sockets opcache simplexml xml \
 
     && pecl install \
-        redis-${REDIS_VERSION} xdebug apcu-${APCU_VERSION} \
+        redis-${REDIS_VERSION} xdebug apcu-${APCU_VERSION} yaml \
 
     && docker-php-ext-enable \
-        redis apcu xdebug \
+        redis apcu xdebug yaml \
 
     # Clean apt cache
     && rm -rf /var/lib/apt/lists/* \
