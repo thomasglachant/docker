@@ -1,4 +1,4 @@
-FROM nginx:1.11
+FROM nginx:stable
 
 # Remove default config
 RUN rm /etc/nginx/conf.d/default.conf
