@@ -9,6 +9,7 @@ then
     php composer-setup.php --quiet
     RESULT=$?
     rm composer-setup.php
+    composer self-update 1.10.22
     exit $RESULT
 else
     >&2 echo 'ERROR: Invalid installer signature'
