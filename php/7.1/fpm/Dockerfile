@@ -7,16 +7,6 @@ ENV REDIS_VERSION=3.1.1
 ENV APCU_VERSION=5.1.8
 ENV CSFIXER_VERSION=2.3.1
 
-# Xdebug default config
-ENV PHP_XDEBUG_ENABLED=0
-ENV PHP_XDEBUG_HOST=0
-ENV PHP_XDEBUG_IDEKEY=PHPSTORM
-ENV PHP_XDEBUG_PORT=9000
-ENV PHP_XDEBUG_MAX_NESTING_LEVEL=1024
-
-# PHP IDE CONFIG (for xdebug : do not edit)
-ENV PHP_IDE_CONFIG="serverName=docker"
-
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
@@ -57,10 +47,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         ctype exif sockets opcache simplexml xml \
 
     && pecl install \
-        redis-${REDIS_VERSION} xdebug apcu-${APCU_VERSION} yaml \
+        redis-${REDIS_VERSION} apcu-${APCU_VERSION} yaml \
 
     && docker-php-ext-enable \
-        redis apcu xdebug yaml \
+        redis apcu yaml \
 
     # Clean apt cache
     && rm -rf /var/lib/apt/lists/* \
